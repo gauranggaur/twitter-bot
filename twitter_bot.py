@@ -16,12 +16,13 @@ search_string = "Day #100DaysOfCode"
 tweets_limit = 100
 
 for tweet in tweepy.Cursor(api.search_tweets , search_string).items(tweets_limit):
-   try:
-      tweet.favorite()
-      tweet.retweet()
-      print("tweet liked")
-      time.sleep(10)
-   except tweepy.TweepyException as e:
-      print(e.reason)
-   except StopIteration:
-      break 
+         try:
+            print(tweet.favorited)
+            api.create_favorite(tweet.id)
+            api.retweet(tweet.id)
+            print("tweet liked")
+            time.sleep(10)
+         except tweepy.TweepyException as e:
+            print(e)
+         except StopIteration:
+            break 
