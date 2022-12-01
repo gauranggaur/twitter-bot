@@ -13,16 +13,17 @@ for follower in tweepy.Cursor(api.get_followers).items():
 
 
 search_string = "Day #100DaysOfCode"
-tweets_limit = 100
+tweets_limit = 50
 
 for tweet in tweepy.Cursor(api.search_tweets , search_string).items(tweets_limit):
          try:
-            print(tweet.favorited)
             api.create_favorite(tweet.id)
             api.retweet(tweet.id)
             print("tweet liked")
             time.sleep(10)
          except tweepy.TweepyException as e:
             print(e)
+            if '429' in str(e):
+               time.sleep(6000)
          except StopIteration:
             break 
